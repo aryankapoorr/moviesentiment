@@ -7,7 +7,7 @@ import numpy as np
 
 # Set page configuration
 st.set_page_config(layout="wide", initial_sidebar_state="expanded",
-                   page_title="NLP Sentiment Analysis Project")
+                   page_title="Movie Review Sentiment Analysis Scoring")
 
 # Load the CSV file
 
@@ -43,10 +43,8 @@ def load_tokenizer():
 
 tokenizer = load_tokenizer()
 
-# General Title
-st.title("NLP Sentiment Analysis Project")
-
 # Streamlit UI
+st.title("Movie Review Sentiment Analysis")
 st.sidebar.title("Navigation")
 selected_tab = st.sidebar.radio(
     "Go to", ["Movie Scores", "Test the model!", "Model Training Results"], index=0)
@@ -61,7 +59,8 @@ if selected_tab == "Movie Scores":
     sort_options = {
         "Highest Score": "Score",
         "Lowest Score": "Score",
-        "Alphabetically": "Movie"
+        "Alphabetically (A-Z)": "Movie",
+        "Alphabetically (Z-A)": "Movie [reverse]"
     }
     selected_sort_option = st.selectbox("Sort by", list(sort_options.keys()))
 
@@ -70,12 +69,19 @@ if selected_tab == "Movie Scores":
         ascending = False
     elif selected_sort_option == "Lowest Score":
         ascending = True
-    else:
-        ascending = True  # Default sorting by alphabetical order
+    elif selected_sort_option == "Alphabetically (A-Z)":
+        ascending = True
+    elif selected_sort_option == "Alphabetically (Z-A)":
+        ascending = False
 
-    # Sort data based on selected criteria
-    sorted_data = data.sort_values(
-        by=sort_options[selected_sort_option], ascending=ascending)
+    if "[reverse]" in selected_sort_option:
+        selected_sort_option = selected_sort_option.replace(
+            "[reverse]", "").strip()
+        sorted_data = data.sort_values(
+            by=sort_options[selected_sort_option], ascending=ascending).iloc[::-1]
+    else:
+        sorted_data = data.sort_values(
+            by=sort_options[selected_sort_option], ascending=ascending)
 
     # Filter data based on search term
     filtered_data = sorted_data[sorted_data['Movie'].str.contains(
