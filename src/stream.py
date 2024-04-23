@@ -19,7 +19,7 @@ def load_data(csv_file):
 
 
 # Assuming you have a CSV with movie data and poster URLs
-data = load_data('../data/Sentiment Analysis Data - Sheet1.csv')
+data = load_data('sentiment_copy.csv')
 
 # Load the Keras model
 
