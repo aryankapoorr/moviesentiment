@@ -49,7 +49,7 @@ st.title("NLP Sentiment Analysis Project")
 # Streamlit UI
 st.sidebar.title("Navigation")
 selected_tab = st.sidebar.radio(
-    "Go to", ["Movie Scores", "Test the model!", "Model Training Results"])
+    "Go to", ["Movie Scores", "Test the model!", "Model Training Results"], index=0)
 
 if selected_tab == "Movie Scores":
     st.header("Movie Scores")
@@ -57,8 +57,29 @@ if selected_tab == "Movie Scores":
     # Search box for movie title
     search_term = st.text_input("Search for a movie:")
 
+    # Sorting options
+    sort_options = {
+        "Highest Score": "Score",
+        "Lowest Score": "Score",
+        "Alphabetically": "Movie"
+    }
+    selected_sort_option = st.selectbox("Sort by", list(sort_options.keys()))
+
+    # Sorting logic
+    if selected_sort_option == "Highest Score":
+        ascending = False
+    elif selected_sort_option == "Lowest Score":
+        ascending = True
+    else:
+        ascending = True  # Default sorting by alphabetical order
+
+    # Sort data based on selected criteria
+    sorted_data = data.sort_values(
+        by=sort_options[selected_sort_option], ascending=ascending)
+
     # Filter data based on search term
-    filtered_data = data[data['Movie'].str.contains(search_term, case=False)]
+    filtered_data = sorted_data[sorted_data['Movie'].str.contains(
+        search_term, case=False)]
 
     # Display filtered data
     if not filtered_data.empty:
@@ -75,17 +96,13 @@ if selected_tab == "Movie Scores":
                     movie = filtered_data.iloc[idx]
                     with columns[j]:
                         st.markdown(
-                            f"<h3 style='font-size: 14px; line-height: 1.2; max-height: 3.6em; overflow: hidden; text-overflow: ellipsis;'>{movie['Movie']}</h3>", unsafe_allow_html=True)
-                        st.image(movie['Poster_URL'], use_column_width=True)
+                            f"<h3 style='font-size: 14px; line-height: 1.2; max-height: 3.6em; overflow: hidden; text-overflow: ellipsis; text-align: center;'>{movie['Movie']}</h3>", unsafe_allow_html=True)
+                        st.image(
+                            movie['Poster_URL'], caption=f"Score: {movie['Score']}", use_column_width=True)
     else:
         st.write("No matching movies found.")
 
-elif selected_tab == "Model Training Results":
-    st.write('<iframe title="Sentiment Analysis Test Results" aria-label="Scatter Plot" id="datawrapper-chart-2INNM" src="https://datawrapper.dwcdn.net/2INNM/2/" scrolling="no" frameborder="0" style="width: 80%; min-width: 100% !important; border: none;" height="800" data-external="1"></iframe>', unsafe_allow_html=True)
-
-    st.write('<iframe title="Sentiment Analysis Test Results (Shortened)" aria-label="Scatter Plot" id="datawrapper-chart-P5oxs" src="https://datawrapper.dwcdn.net/P5oxs/2/" scrolling="no" frameborder="0" style="width: 80%; min-width: 100% !important; border: none;" height="800" data-external="1"></iframe>', unsafe_allow_html=True)
-
-else:
+elif selected_tab == "Test the model!":
     st.subheader("Enter a sentence to analyze its sentiment:")
     user_input = st.text_input("Input Sentence:")
 
@@ -131,3 +148,8 @@ else:
         # Note about sentiment classification
         st.write(
             "\n\n**Note**: Positive/Neutral/Negative classifications can be ambiguous and lose precision in terms of describing the sentiment of text. To account for that, the positive and sentiment scores are provided, which are on a scale from [0, 1] after the final layer of the model performs the softmax function on the sentiment.")
+
+else:
+    st.write('<iframe title="Sentiment Analysis Test Results" aria-label="Scatter Plot" id="datawrapper-chart-2INNM" src="https://datawrapper.dwcdn.net/2INNM/5/" scrolling="no" frameborder="0" style="width: 80%; min-width: 100% !important; border: none;" height="682" data-external="1"></iframe>', unsafe_allow_html=True)
+
+    st.write('<iframe title="Sentiment Analysis Test Results (Shortened)" aria-label="Scatter Plot" id="datawrapper-chart-P5oxs" src="https://datawrapper.dwcdn.net/P5oxs/3/" scrolling="no" frameborder="0" style="width: 80%; min-width: 100% !important; border: none;" height="682" data-external="1"></iframe>', unsafe_allow_html=True)
