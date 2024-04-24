@@ -4,6 +4,11 @@ import tensorflow as tf
 import pickle
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np
+import sys
+import path
+
+dir = path.Path(__file__).abspath()
+sys.path.append(dir.parent.parent)
 
 # Set page configuration
 st.set_page_config(layout="wide", initial_sidebar_state="expanded",
@@ -19,8 +24,7 @@ def load_data(csv_file):
 
 
 # Assuming you have a CSV with movie data and poster URLs
-data = load_data(
-    'https://raw.githubusercontent.com/aryankapoorr/moviesentiment/main/data/Sentiment%20Analysis%20Data%20-%20Sheet1.csv')
+data = load_data('../data/Sentiment Analysis Data - Sheet1.csv')
 
 # Load the Keras model
 
