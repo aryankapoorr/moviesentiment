@@ -153,9 +153,12 @@ elif selected_tab == "Test the model!":
 
         # Note about sentiment classification
         st.write(
-            "\n\n**Note**: Positive/Neutral/Negative classifications can be ambiguous and lose precision in terms of describing the sentiment of text. To account for that, the positive and sentiment scores are provided, which are on a scale from [0, 1] after the final layer of the model performs the softmax function on the sentiment.")
+            "\n\n**Note**: Positive//Negative classifications can be ambiguous and lose precision in terms of describing the sentiment of text. To account for that, the positive and negative sentiment scores are provided, which are on a scale from [0, 1] after the final layer of the model performs the softmax function on the sentiment.")
+        st.write("\n\n**Additionally**, the model is tuned specifically to movie reviews. Content put into the model tester that does not meet the appropriate length (250 characters) or subject matter can lead to inaccurate results.")
 
 else:
+    st.write("Each data point represents a review that was tested to capture performance after the model was trained. The horizontal axis shows the amount of negative sentiment in an individual review, and the vertical axis represents the positive sentimint in an individual review. The second graph shows the results of the first 500 test points, due to the distribution of data points not being clear with the full sample size of test data (10,000)")
     st.write('<iframe title="Sentiment Analysis Test Results" aria-label="Scatter Plot" id="datawrapper-chart-2INNM" src="https://datawrapper.dwcdn.net/2INNM/5/" scrolling="no" frameborder="0" style="width: 80%; min-width: 100% !important; border: none;" height="682" data-external="1"></iframe>', unsafe_allow_html=True)
 
+    st.write("\n\nAfter observing the distribution of data points in the smaller test size, it become clear that there was no obvious boundary to discern between positive and negative reviews. Therefore, generating a score for a review was done with the decimal score, instead of a binary positive/negative.")
     st.write('<iframe title="Sentiment Analysis Test Results (Shortened)" aria-label="Scatter Plot" id="datawrapper-chart-P5oxs" src="https://datawrapper.dwcdn.net/P5oxs/3/" scrolling="no" frameborder="0" style="width: 80%; min-width: 100% !important; border: none;" height="682" data-external="1"></iframe>', unsafe_allow_html=True)
