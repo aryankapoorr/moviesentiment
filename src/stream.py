@@ -26,14 +26,13 @@ def load_data(csv_file):
 
 
 # Assuming you have a CSV with movie data and poster URLs
-data = load_data('https://raw.githubusercontent.com/aryankapoorr/moviesentiment/main/data/Sentiment%20Analysis%20Data%20-%20Sheet1.csv')
-
+data = load_data('./data/Sentiment Analysis Data - Sheet1.csv')
 # Load the Keras model
 
 
 def load_model():
     # Assuming the model file is 'sentiment_analysis_model.h5'
-    model = tf.keras.models.load_model('./sentiment_analysis_model.h5')
+    model = tf.keras.models.load_model('./src/sentiment_analysis_model.h5')
     return model
 
 
@@ -43,7 +42,7 @@ model = load_model()
 
 
 def load_tokenizer():
-    with open('tokenizer.pickle', 'rb') as handle:
+    with open('./src/tokenizer.pickle', 'rb') as handle:
         tokenizer = pickle.load(handle)
     return tokenizer
 
