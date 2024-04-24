@@ -32,7 +32,7 @@ data = load_data('https://raw.githubusercontent.com/aryankapoorr/moviesentiment/
 
 def load_model():
     # Assuming the model file is 'sentiment_analysis_model.h5'
-    model = tf.keras.models.load_model('https://github.com/aryankapoorr/moviesentiment/raw/main/SentimentAnalysis.ipynb')
+    model = tf.keras.models.load_model('https://raw.githubusercontent.com/aryankapoorr/moviesentiment/main/SentimentAnalysis.ipynb')
     return model
 
 
