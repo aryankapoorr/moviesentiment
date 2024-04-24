@@ -134,21 +134,15 @@ elif selected_tab == "Test the model!":
         neutral_threshold = 0.99  # Adjust this threshold as needed
 
         # Calculate the difference between positive and negative probabilities
-        diff = abs(predicted_rating[1] - predicted_rating[0])
+        # diff = abs(predicted_rating[1] - predicted_rating[0])
         # print("Diff: " + str(diff))
+        s = np.argmax(predicted_probabilities)
 
         # Check if the difference is below the neutral threshold
-        if diff < neutral_threshold:
-            predicted_sentiment = 'NEUTRAL'
-        # Check if sentiment is positive
-        elif predicted_rating[1] > pos_threshold:
+        if s == 1:
             predicted_sentiment = 'POSITIVE'
-        # Check if sentiment is negative
-        elif predicted_rating[0] > neg_threshold:
-            predicted_sentiment = 'NEGATIVE'
         else:
-            # Default to neutral if none of the conditions are met
-            predicted_sentiment = 'NEUTRAL'
+            predicted_sentiment = 'NEGATIVE'
 
         st.write(
             f"**Predicted Sentiment**: {predicted_sentiment}")
