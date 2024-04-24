@@ -1,164 +1,28 @@
 import streamlit as st
-import pandas as pd
-import tensorflow as tf
-import pickle
-from tensorflow.keras.preprocessing.sequence import pad_sequences
-import numpy as np
-import sys
+from movie_scores import movie_scores_page
+from test_model import test_model_page
+from model_training_results import model_training_results_page
+from about import about_page
 
-import sys
-import path
-
-dir = path.Path(__file__).realpath()
-sys.path.append(dir.parent.parent)
-
-# Set page configuration
-st.set_page_config(layout="wide", initial_sidebar_state="expanded",
+def main():
+    st.set_page_config(layout="wide", initial_sidebar_state="expanded",
                    page_title="Movie Review Sentiment Analysis Scoring")
+    st.title("Movie Review Sentiment Analysis")
+    st.sidebar.title("Navigation")
+    selected_tab = st.sidebar.radio(
+        "Go to", ["Movie Scores", "Test the model!", "Model Training Results", "About"], index=0)
 
-# Load the CSV file
+    if selected_tab == "Movie Scores":
+        movie_scores_page()
 
+    elif selected_tab == "Test the model!":
+        test_model_page()
 
-@st.cache_data
-def load_data(csv_file):
-    data = pd.read_csv(csv_file)
-    return data
+    elif selected_tab == "Model Training Results":
+        model_training_results_page()
 
+    elif selected_tab == "About":
+        about_page()
 
-# Assuming you have a CSV with movie data and poster URLs
-data = load_data('./data/Sentiment Analysis Data - Sheet1.csv')
-# Load the Keras model
-
-
-def load_model():
-    # Assuming the model file is 'sentiment_analysis_model.h5'
-    model = tf.keras.models.load_model('./src/sentiment_analysis_model.h5')
-    return model
-
-
-model = load_model()
-
-# Load the tokenizer
-
-
-def load_tokenizer():
-    with open('./src/tokenizer.pickle', 'rb') as handle:
-        tokenizer = pickle.load(handle)
-    return tokenizer
-
-
-tokenizer = load_tokenizer()
-
-# Streamlit UI
-st.title("Movie Review Sentiment Analysis")
-st.sidebar.title("Navigation")
-selected_tab = st.sidebar.radio(
-    "Go to", ["Movie Scores", "Test the model!", "Model Training Results"], index=0)
-
-if selected_tab == "Movie Scores":
-    st.header("Movie Scores")
-
-    # Search box for movie title
-    search_term = st.text_input("Search for a movie:")
-
-    # Sorting options
-    sort_options = {
-        "Highest Score": "Score",
-        "Lowest Score": "Score",
-        "Alphabetically (A-Z)": "Movie",
-        "Alphabetically (Z-A)": "Movie [reverse]"
-    }
-    selected_sort_option = st.selectbox("Sort by", list(sort_options.keys()))
-
-    # Sorting logic
-    if selected_sort_option == "Highest Score":
-        ascending = False
-    elif selected_sort_option == "Lowest Score":
-        ascending = True
-    elif selected_sort_option == "Alphabetically (A-Z)":
-        ascending = True
-    elif selected_sort_option == "Alphabetically (Z-A)":
-        ascending = False
-
-    if "[reverse]" in selected_sort_option:
-        selected_sort_option = selected_sort_option.replace(
-            "[reverse]", "").strip()
-        sorted_data = data.sort_values(
-            by=sort_options[selected_sort_option], ascending=ascending).iloc[::-1]
-    else:
-        sorted_data = data.sort_values(
-            by=sort_options[selected_sort_option], ascending=ascending)
-
-    # Filter data based on search term
-    filtered_data = sorted_data[sorted_data['Movie'].str.contains(
-        search_term, case=False)]
-
-    # Display filtered data
-    if not filtered_data.empty:
-        num_movies = len(filtered_data)
-        num_columns = 6  # Adjusted to 6 movies per row
-        # Ceiling division to calculate number of rows
-        num_rows = -(-num_movies // num_columns)
-
-        for i in range(num_rows):
-            columns = st.columns(num_columns)
-            for j in range(num_columns):
-                idx = i * num_columns + j
-                if idx < num_movies:
-                    movie = filtered_data.iloc[idx]
-                    with columns[j]:
-                        st.markdown(
-                            f"<h3 style='font-size: 14px; line-height: 1.2; max-height: 3.6em; overflow: hidden; text-overflow: ellipsis; text-align: center;'>{movie['Movie']}</h3>", unsafe_allow_html=True)
-                        st.image(
-                            movie['Poster_URL'], caption=f"Score: {movie['Score']}", use_column_width=True)
-    else:
-        st.write("No matching movies found.")
-
-elif selected_tab == "Test the model!":
-    st.subheader("Enter a sentence to analyze its sentiment:")
-    user_input = st.text_input("Input Sentence:")
-
-    if user_input:
-        # Tokenize and pad the input text
-        text_sequence = tokenizer.texts_to_sequences([user_input])
-        text_sequence = pad_sequences(text_sequence, maxlen=100)
-
-        # Make a prediction using the trained model
-        predicted_rating = model.predict(text_sequence, verbose=None)[0]
-
-        predicted_probabilities = np.array(predicted_rating)
-        # print(predicted_rating)
-
-        pos_threshold = 0.9
-        neg_threshold = 0.1
-        neutral_threshold = 0.99  # Adjust this threshold as needed
-
-        # Calculate the difference between positive and negative probabilities
-        # diff = abs(predicted_rating[1] - predicted_rating[0])
-        # print("Diff: " + str(diff))
-        s = np.argmax(predicted_probabilities)
-
-        # Check if the difference is below the neutral threshold
-        if s == 1:
-            predicted_sentiment = 'POSITIVE'
-        else:
-            predicted_sentiment = 'NEGATIVE'
-
-        st.write(
-            f"**Predicted Sentiment**: {predicted_sentiment}")
-        st.write(
-            f"**Negative Sentiment**: {predicted_probabilities[0]:.4f}")
-        st.write(
-            f"**Positive Sentiment**: {predicted_probabilities[1]:.4f}")
-
-        # Note about sentiment classification
-        st.write(
-            "\n\n**Note**: Positive//Negative classifications can be ambiguous and lose precision in terms of describing the sentiment of text. To account for that, the positive and negative sentiment scores are provided, which are on a scale from [0, 1] after the final layer of the model performs the softmax function on the sentiment.")
-        st.write("\n\n**Additionally**, the model is tuned specifically to movie reviews. Content put into the model tester that does not meet the appropriate length (250 characters) or subject matter can lead to inaccurate results.")
-
-else:
-    st.write("Each data point represents a review that was tested to capture performance after the model was trained. The horizontal axis shows the amount of negative sentiment in an individual review, and the vertical axis represents the positive sentimint in an individual review. The second graph shows the results of the first 500 test points, due to the distribution of data points not being clear with the full sample size of test data (10,000)")
-    st.write('<iframe title="Sentiment Analysis Test Results" aria-label="Scatter Plot" id="datawrapper-chart-2INNM" src="https://datawrapper.dwcdn.net/2INNM/5/" scrolling="no" frameborder="0" style="width: 80%; min-width: 100% !important; border: none;" height="682" data-external="1"></iframe>', unsafe_allow_html=True)
-
-    st.write("\n\nAfter observing the distribution of data points in the smaller test size, it become clear that there was no obvious boundary to discern between positive and negative reviews. Therefore, generating a score for a review was done with the decimal score, instead of a binary positive/negative.")
-    st.write('<iframe title="Sentiment Analysis Test Results (Shortened)" aria-label="Scatter Plot" id="datawrapper-chart-P5oxs" src="https://datawrapper.dwcdn.net/P5oxs/3/" scrolling="no" frameborder="0" style="width: 80%; min-width: 100% !important; border: none;" height="682" data-external="1"></iframe>', unsafe_allow_html=True)
+if __name__ == "__main__":
+    main()
