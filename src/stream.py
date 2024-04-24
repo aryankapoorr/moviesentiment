@@ -7,7 +7,7 @@ import numpy as np
 import sys
 import path
 
-dir = path.Path(__file__).absolute()
+dir = path.Path(__file__).abspath()
 sys.path.append(dir.parent.parent)
 print(dir)
 
