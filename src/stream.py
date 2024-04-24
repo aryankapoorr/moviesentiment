@@ -6,7 +6,7 @@ from about import about_page
 
 def main():
     st.set_page_config(layout="wide", initial_sidebar_state="expanded",
-                   page_title="Movie Review Sentiment Analysis Scoring")
+                   page_title="Movie Review Sentiment Analysis Scoring", page_icon="🎥")
     st.title("Movie Review Sentiment Analysis")
     st.sidebar.title("Navigation")
     selected_tab = st.sidebar.radio(
