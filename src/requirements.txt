@@ -1,2 +1,4 @@
 tensorflow
 path
+sentiment_analysis_model.h5
+tokenizer.pickle
