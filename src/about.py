@@ -65,10 +65,10 @@ def about_page():
 
     st.header("About the Author")
     image_path = "./data/authPhoto.jpeg"
-    col1, col2 = st.columns([3, 3])  # Adjust the width ratio as needed
+    col1, col2 = st.columns(2)  # Adjust the width ratio as needed
     with col1:
         # Display the image with a smaller width
-        st.image(image_path, width=500)
+        st.image(image_path)
 
     with col2:
         # Display text to the right of the image
