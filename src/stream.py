@@ -4,12 +4,6 @@ import tensorflow as tf
 import pickle
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np
-import sys
-import path
-
-dir = path.Path(__file__).realpath()
-sys.path.append(dir)
-print(dir)
 
 # Set page configuration
 st.set_page_config(layout="wide", initial_sidebar_state="expanded",
