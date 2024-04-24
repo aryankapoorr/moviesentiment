@@ -4,6 +4,13 @@ import tensorflow as tf
 import pickle
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np
+import sys
+
+import sys
+import path
+
+dir = path.Path(__file__).realpath()
+sys.path.append(dir.parent.parent)
 
 # Set page configuration
 st.set_page_config(layout="wide", initial_sidebar_state="expanded",
@@ -26,7 +33,7 @@ data = load_data('https://raw.githubusercontent.com/aryankapoorr/moviesentiment/
 
 def load_model():
     # Assuming the model file is 'sentiment_analysis_model.h5'
-    model = tf.keras.models.load_model('https://raw.githubusercontent.com/aryankapoorr/moviesentiment/main/SentimentAnalysis.ipynb')
+    model = tf.keras.models.load_model('./sentiment_analysis_model.h5')
     return model
 
 
