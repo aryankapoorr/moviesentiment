@@ -7,8 +7,9 @@ import numpy as np
 import sys
 import path
 
-dir = path.Path(__file__).abspath()
+dir = path.Path(__file__).absolute()
 sys.path.append(dir.parent.parent)
+print(dir)
 
 # Set page configuration
 st.set_page_config(layout="wide", initial_sidebar_state="expanded",
