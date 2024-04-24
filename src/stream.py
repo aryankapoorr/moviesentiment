@@ -31,7 +31,7 @@ data = load_data('../data/Sentiment Analysis Data - Sheet1.csv')
 
 def load_model():
     # Assuming the model file is 'sentiment_analysis_model.h5'
-    model = tf.keras.models.load_model('sentiment_analysis_model.h5')
+    model = tf.keras.models.load_model('./sentiment_analysis_model.h5')
     return model
 
 
