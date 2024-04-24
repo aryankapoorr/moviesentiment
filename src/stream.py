@@ -8,7 +8,7 @@ import sys
 import path
 
 dir = path.Path(__file__).realpath()
-sys.path.append(dir.parent.parent)
+sys.path.append(dir.parent)
 print(dir)
 
 # Set page configuration
