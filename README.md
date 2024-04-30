@@ -1,5 +1,5 @@
 # Movie Sentiment Analysis Project
-<img src="https://github.com/aryankapoorr/moviesentiment/blob/main/data/deniro.webp" width=300>
+![](https://github.com/aryankapoorr/moviesentiment/blob/main/data/ryan.gif)
 
 For a live demonstration of the sentiment analysis tool, visit the [Movie Sentiment Analyzer](https://moviesentiment.streamlit.app/)
 
