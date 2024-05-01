@@ -32,7 +32,7 @@ def about_page():
     The sentiment analysis model leveras a CNN to gather sentiment of text. After splitting data (80% train 20% test) and 
     initializing the tokenizer, I started building the layers of the neural network.
     - The embedding layer establishes the vocabulary size (with performance being maximized at a size of 5000)
-    - A 1D convolutional layer then learns down patterns in the input, breaking down complex relations between the language. This
+    - A 1D convolutional layer then detects patterns in the input, breaking down complex relations between the language. This
         step is essential in any natural language model
     - A pooling layer is applied to reduce dimensions and reduce information into a singular vector
     - A fourth dense layer is applied with ReLU as the activation function (sigmoid and tanh were also options but performed worse)
