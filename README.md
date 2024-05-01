@@ -11,7 +11,7 @@ As a self-proclaimed cinephile, I am always looking for ways to gather the publi
 After finding an already-cleaned database of movie reviews, I developed a Sentiment Analysis Model using a Convolutional Neural Network. After testing various parameters and epochs of model training, I fit the model and created a scoring system, weighting the sentiments based on the inverse of their gaussian distribution. Then, ~250 reviews were collected per movie and passed through the model, with each score being uploaded to the website.
 
 ## Demo
-[Demo](#) - Placeholder for the demo link. To be updated.
+Link to the project UI [demo](https://drive.google.com/file/d/1U-zUJl30E8oip_l7EnxGpn0UxzymbnJW/view?usp=sharing)
 
 ## Usage
 To use the sentiment analysis tool locally, follow these steps:
