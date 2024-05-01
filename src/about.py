@@ -3,7 +3,8 @@ import streamlit as st
 def about_page():
     st.markdown("""
     **Note**: all model development can be found in the [project notebook](https://colab.research.google.com/drive/1cl29Xsxy2YjZUaXfmDyi_n9IytefdcLS?usp=sharing)
-    and the entire codespace is in the [project repository](https://github.com/aryankapoorr/moviesentiment)
+    , the entire codespace is in the [project repository](https://github.com/aryankapoorr/moviesentiment)
+    , and the project report can be seen on [this link](https://github.com/aryankapoorr/moviesentiment/blob/main/Sentiment_Analysis_Report.pdf)
     """)
 
     st.header("Project Description")
