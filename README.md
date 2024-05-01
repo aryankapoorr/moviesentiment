@@ -1,14 +1,14 @@
 # Movie Sentiment Analysis Project
-<img src="https://github.com/aryankapoorr/moviesentiment/blob/main/data/deniro.webp" width=300>
+![](https://github.com/aryankapoorr/moviesentiment/blob/main/data/ryan.gif)
 
 For a live demonstration of the sentiment analysis tool, visit the [Movie Sentiment Analyzer](https://moviesentiment.streamlit.app/)
 
 Explore the [Project Notebook](https://colab.research.google.com/drive/1cl29Xsxy2YjZUaXfmDyi_n9IytefdcLS?usp=sharing) for an in-depth look at implementation
 
 ## Project Description
-As a self-proclaimed cinephile, I am always looking for ways to gather the public's concensus opinion on a movie before watching. All of the current major outlets (Rotten Tomatoes, IMDb, Metacritic, etc.) are decent options, but can be arbitrary with bias and varying scoring systems from person to person. Calculating the sentiment of text from a movie review can create a standardized system for understanding the concensus opinion of a movie.
+As a self-proclaimed cinephile, I am always looking for ways to gather the public's consensus opinion on a movie before watching. All of the current major outlets (Rotten Tomatoes, IMDb, Metacritic, etc.) are decent options, but can be arbitrary with bias and varying scoring systems from person to person. Calculating the sentiment of text from a movie review can create a standardized system for understanding the consensus opinion of a movie.
 
-After finding an already-cleaned database of movie reviews, I developed a Sentiment Analysis Model using a Convolutional Neural Network. After testing various paramaters and epochs of model training, I fit the model and created a scoring system, weighting the sentiments based on the inverse of their gaussian distribution. Then, ~250 reviews were collected per movie and passed through the model, with each score being uploaded to the website.
+After finding an already-cleaned database of movie reviews, I developed a Sentiment Analysis Model using a Convolutional Neural Network. After testing various parameters and epochs of model training, I fit the model and created a scoring system, weighting the sentiments based on the inverse of their gaussian distribution. Then, ~250 reviews were collected per movie and passed through the model, with each score being uploaded to the website.
 
 ## Demo
 [Demo](#) - Placeholder for the demo link. To be updated.
